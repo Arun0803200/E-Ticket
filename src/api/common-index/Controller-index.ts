@@ -1,0 +1,1 @@
+export * from '../../../src/api/controllers/UserController'
