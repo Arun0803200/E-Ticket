@@ -1,10 +1,11 @@
 import { table } from "console";
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
+const tableName = 'booking_tbl'
 export class CreateBookingTable1679451149576 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         const table = new Table({
-            name: 'booking_tbl',
+            name: tableName,
             columns: [
                 {
                     name: 'booking_id',
@@ -86,13 +87,13 @@ export class CreateBookingTable1679451149576 implements MigrationInterface {
                 }
             ],
         });
-        const ifTable = await queryRunner.hasTable('booking_tbl');
+        const ifTable = await queryRunner.hasTable(tableName);
         if (!ifTable) {
             await queryRunner.createTable(table);
         }
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('booking_tbl', true);
+        await queryRunner.dropTable(tableName, true);
     }
 }
