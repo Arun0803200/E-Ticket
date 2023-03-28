@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm"
 
+const tableName = 'seat_tbl'
 export class createSeatTable1679448906331 implements MigrationInterface {
 
     private foreignKeys = new TableForeignKey({
@@ -12,7 +13,7 @@ export class createSeatTable1679448906331 implements MigrationInterface {
     });
     public async up(queryRunner: QueryRunner): Promise<void> {
         const table = new Table({
-            name: 'seat_tbl',
+            name: tableName,
             columns: [
                 {
                     name: 'seat_id',
@@ -35,7 +36,7 @@ export class createSeatTable1679448906331 implements MigrationInterface {
                     isNullable: true
                 },
                 {
-                    name: 'moie_name',
+                    name: 'movie_name',
                     type: 'VARCHAR',
                     length: '225',
                     isPrimary: false,
@@ -89,11 +90,11 @@ export class createSeatTable1679448906331 implements MigrationInterface {
                 }
             ]
         });
-        const ifTable = await queryRunner.hasTable('seat_tbl');
+        const ifTable = await queryRunner.hasTable(tableName);
         if (!ifTable) {
             await queryRunner.createTable(table);
         }
-        const getTable = await queryRunner.getTable('seat_tbl');
+        const getTable = await queryRunner.getTable(tableName);
         const ifForeignKey = getTable.foreignKeys.find(fk => fk.columnNames.indexOf('screen_id')!==-1);
         if (!ifForeignKey) {
             await queryRunner.createForeignKey(getTable, this.foreignKeys);
@@ -101,8 +102,8 @@ export class createSeatTable1679448906331 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('seat_tbl');
-        const getTable = await queryRunner.getTable('seat_tbl');
+        await queryRunner.dropTable(tableName);
+        const getTable = await queryRunner.getTable(tableName);
         const ifForeignKey = getTable.foreignKeys.find(fk => fk.columnNames.indexOf('screen_id')!==-1);
         if (!ifForeignKey) {
             await queryRunner.createForeignKey(getTable, this.foreignKeys);

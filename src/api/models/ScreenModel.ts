@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, ManyToOne} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, ManyToOne, OneToMany} from "typeorm";
 import { BaseModel } from "./BaseModel";
 import { Theatre } from "./TheatreModel";
+import { Seat } from "./SeatModel";
 import * as moment from 'moment';
 
 @Entity('screen_tbl')
@@ -29,9 +30,6 @@ public startTime: string;
 @Column({name: 'end_time'})
 public endTime: string;
 
-@ManyToOne((type) => Theatre, theater => theater.screen)
-public theatre: Theatre;
-
 @BeforeInsert()
 public async createdData(): Promise<any> {
     this.createdDate = moment().format('YYYY-MM-DD HH:mm:ss')
@@ -41,4 +39,11 @@ public async createdData(): Promise<any> {
 public async modifiedData(): Promise<any> {
     this.modifiedDate = moment().format('YYYY-MM-DD HH:mm:ss');
 }
+
+@ManyToOne((type) => Theatre, theater => theater.screen)
+public theatre: Theatre;
+
+@OneToMany((type) => Seat, seat => seat.screen)
+public seat: Seat;
+
 }

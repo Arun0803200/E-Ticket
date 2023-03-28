@@ -1,6 +1,6 @@
 import { JsonController, Req, Res, Get, Post, Body, QueryParam, BodyParam } from "routing-controllers";
 import { UserService } from "../services/UserService";
-import { UserRequest } from "../AdminRequest/UserRequest";
+import { UserRequest } from "./request/UserRequest";
 import { User } from "../models/User";
 import * as jwt from 'jsonwebtoken';
 import { Token } from "../models/Token";
