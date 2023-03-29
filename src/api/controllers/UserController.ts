@@ -14,7 +14,7 @@ export class UserController {
 
     // Create user
     @Post()
-    public async createUser(@Body({validate: true}) userRequest: UserRequest, @Res() response ): Promise<any> {
+    public async createUser(@Body({validate: true}) userRequest: UserRequest, @Res() response: any ): Promise<any> {
         const regularExpress: any = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
         const newUser = new User();
         if (regularExpress.test(userRequest.password) === true) {

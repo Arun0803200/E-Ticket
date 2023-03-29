@@ -2,6 +2,7 @@ import { MicroframeworkSettings, MicroframeworkLoader } from "microframework";
 import { Token } from "../api/models/Token";
 import { getConnectionOptions, createConnection } from "typeorm";
 import * as Migration from "../../src/api/common-index/Migration";
+import * as models from "../../src/api/common-index/Mode-index";
 export const typeormLoader: MicroframeworkLoader = async (settings: MicroframeworkSettings) => {  
     const loaderOption: any = await getConnectionOptions();    
     const connectionOptions: any = Object.assign(loaderOption, {
@@ -13,7 +14,7 @@ export const typeormLoader: MicroframeworkLoader = async (settings: Microframewo
         password: '',
         synchronize: false,
         logging: true,
-        entities: ['../api/models/**/*.ts'],
+        entities: Object.values(models),
         migrations: Object.values(Migration),
         cli: {
             migrationsDir: './src/database/Migrations'
