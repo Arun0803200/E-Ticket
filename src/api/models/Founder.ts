@@ -1,16 +1,51 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { BaseModel } from './BaseModel';
 import * as moment from 'moment';
+import * as bcrypt from 'bcrypt';
+
 @Entity('founder')
 export class Founder extends BaseModel{
+
+    public static hashPassword(password: string) {
+        return new Promise((resolve, reject) => {
+            bcrypt.hash(password, 10, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
+    public static comparePassword(password: any, hashPassword: Founder) {
+        return new Promise((resolve, reject) => {
+            bcrypt.comparePassword(password, hashPassword, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            })
+        })
+    }
     @PrimaryGeneratedColumn({name: 'founder_id'})
     public founderId: number;
 
-    @Column({name: 'founder_name'})
-    public founderName: string;
+    @Column({name: 'first_name'})
+    public firstName: string;
+
+    @Column({name: 'last_name'})
+    public lastName: string;
 
     @Column({name: 'email'})
     public email: string;
+
+    @Column({name: 'username'})
+    public username: string;
+
+    @Column({name: 'password'})
+    public password: string
 
     @Column({name: 'mobile_no'})
     public mobileNo: string;

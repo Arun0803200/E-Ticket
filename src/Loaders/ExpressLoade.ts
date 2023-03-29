@@ -12,12 +12,12 @@ export const expressLoader: MicroframeworkLoader =  (settings: MicroframeworkSet
         app.use(bodyParser.json({limit: '50mb'}));
         const expressApp: Application = useExpressServer(app, {
             cors: true,
-            routePrefix: process.env.ROUTE_PREFIX,
+            routePrefix: process.env.APP_ROUTE_PREFIX,
             defaultErrorHandler: true,
             classTransformer: true,
             controllers: Object.values(controllerIndex),
         });        
-        const expressServer = expressApp.listen(process.env.PORT);
+        const expressServer = expressApp.listen(process.env.APP_PORT);
         settings.setData('expressApp', expressApp);
         settings.setData('expressServer', expressServer);
      }
